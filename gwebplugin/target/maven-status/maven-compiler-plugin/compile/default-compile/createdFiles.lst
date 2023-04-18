@@ -1,0 +1,3 @@
+com\gvision\gwebplugin\Plugin.class
+com\gvision\gwebplugin\Httphandlers\MyHttpHandler.class
+com\gvision\gwebplugin\Startwebserver.class
