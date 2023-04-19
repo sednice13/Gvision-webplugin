@@ -1,4 +1,4 @@
-package com.gvision.gwebplugin.Httphandlers;
+package com.gvision.gwebplugin.Http.Httphandlers;
 
 import java.util.logging.Logger;
 
