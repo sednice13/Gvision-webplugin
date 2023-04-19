@@ -1,28 +1,19 @@
 package com.gvision.gwebplugin;
 
 import java.util.logging.Logger;
-
-import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+
 import org.bukkit.plugin.java.JavaPlugin;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.bukkit.Bukkit;
+
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
+
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
+
 
 /*
  * gwebplugin java plugin
