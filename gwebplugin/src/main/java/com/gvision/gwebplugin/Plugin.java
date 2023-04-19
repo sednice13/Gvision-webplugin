@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import org.bukkit.ChatColor;
 
 import org.bukkit.event.EventHandler;
-
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 
@@ -43,6 +43,13 @@ public class Plugin extends JavaPlugin implements Listener
       // Skicka ett välkomstmeddelande till nya spelare
       String message = "Välkommen till servern!";
       event.getPlayer().sendMessage(ChatColor.GREEN + message);
+  }
+
+  @EventHandler 
+  public void getPlayerMessage(AsyncPlayerChatEvent event) {
+
+    event.getMessage();
+    
   }
   
 }
