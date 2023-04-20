@@ -40,11 +40,8 @@ public class MyHttpHandler implements HttpHandler {
        
         Bukkit.getLogger().log(Level.INFO, "HTTP-förfrågan mottagen på " + exchange.getRequestURI());
         
-        String message = "En ny HTTP-förfrågan har mottagits på " + exchange.getRequestURI();
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            player.sendMessage(ChatColor.GREEN + message);
-        }
-
+        
+       
         if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
             Bukkit.getLogger().log(Level.INFO, "Test 1 " );
             sendMessageToPlayers(exchange);
@@ -67,6 +64,11 @@ public class MyHttpHandler implements HttpHandler {
             String message = jsonRequest.get("message").getAsString();
     
             Bukkit.getLogger().log(Level.INFO, "<WEBSITE> " + message);
+
+            for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                player.sendMessage(ChatColor.RED + "<WEBSITE> " + ChatColor.GREEN + message);
+            }
+    
         }
     
         String response = "Skickat meddelande";

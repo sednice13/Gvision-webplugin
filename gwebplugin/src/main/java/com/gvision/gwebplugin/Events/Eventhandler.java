@@ -3,7 +3,9 @@ package com.gvision.gwebplugin.Events;
 import java.io.IOException;
 
 import com.gvision.gwebplugin.Http.Post.Postmessage;
+import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,8 +25,10 @@ public class Eventhandler implements Listener{
 
     @EventHandler
     public void getPlayerMessage(AsyncPlayerChatEvent event) throws IOException {
-         
-        postHandler.sendHttpmessageToChat(event.getMessage());
+         String message = event.getMessage();
+
+         Bukkit.getLogger().log(Level.INFO, "meddelande " + message );
+        postHandler.sendHttpmessageToChat(message);
         
 
     }

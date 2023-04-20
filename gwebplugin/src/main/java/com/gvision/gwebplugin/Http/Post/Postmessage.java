@@ -8,8 +8,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import com.google.gson.JsonObject;
 
-import org.json.JSONObject;
+
 
 public class Postmessage {
     
@@ -19,20 +20,24 @@ public class Postmessage {
      HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
      http.setRequestMethod("POST");
-     http.setRequestProperty("Content-Type", "application/json; utf-8");
+     http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
      http.setRequestProperty("Accept", "application/json");
      http.setDoOutput(true);
 
-     JSONObject jsonobject = new JSONObject();
+     JsonObject jsonobject = new JsonObject();
+     jsonobject.addProperty("message", message);
 
-     
+     String jsonString = jsonobject.toString();
+
+
+
 
 
      try (OutputStream os = http.getOutputStream()) {
-        byte[] input = message.getBytes(StandardCharsets.UTF_8);
+        byte[] input = jsonString.getBytes(StandardCharsets.UTF_8);
         os.write(input, 0, input.length);
+        os.flush();
     }
-    
     
     try (BufferedReader br = new BufferedReader(new InputStreamReader(http.getInputStream(), StandardCharsets.UTF_8))) {
         StringBuilder response = new StringBuilder();
@@ -41,10 +46,9 @@ public class Postmessage {
             response.append(responseLine.trim());
         }
         System.out.println(response.toString());
-
-
- 
     }
+   
+
 }
 
 }
