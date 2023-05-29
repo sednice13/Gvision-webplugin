@@ -1,6 +1,5 @@
 package com.gvision.gwebplugin;
 
-import java.util.logging.Logger;
 
 import com.gvision.gwebplugin.Events.Eventhandler;
 
@@ -11,17 +10,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 
-import org.bukkit.ChatColor;
-
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-
 /*
  * gwebplugin java plugin
  */
 public class Plugin extends JavaPlugin implements Listener {
-    private static final Logger LOGGER = Logger.getLogger("gwebplugin");
 
     @Override
     public void onEnable() {

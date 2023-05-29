@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
-
+import java.util.logging.Level;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
@@ -21,6 +21,7 @@ public class ConnectPlayerHandler implements HttpHandler {
         // TODO Auto-generated method stub
         if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
            
+            getUUIDwithUsername(exchange);
         }
     }
 
@@ -29,21 +30,31 @@ public class ConnectPlayerHandler implements HttpHandler {
         InputStreamReader reader = new InputStreamReader(requestBody, StandardCharsets.UTF_8);
         
         JsonObject jsonRequest = JsonParser.parseReader(reader).getAsJsonObject();
+
+        
        
         JsonObject jsonResponse = new JsonObject();
     
         if (jsonRequest.has("playername")) {
            
             String plname = jsonRequest.get("playername").getAsString();
+
+            
     
             Player player = Bukkit.getPlayer(plname);
+
+           
     
             if(player != null) {
-    
+              
+                Bukkit.getLogger().log(Level.INFO, "Test 4 " );
                 UUID uuid = player.getUniqueId(); 
     
                 jsonResponse.addProperty("playername", plname);
                 jsonResponse.addProperty("uuid", uuid.toString());
+
+                
+               
             } else {
                 jsonResponse.addProperty("error", "Player not found or not online");
             }
@@ -53,6 +64,7 @@ public class ConnectPlayerHandler implements HttpHandler {
         }
     
         String response = jsonResponse.toString();
+        
         
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         exchange.sendResponseHeaders(200, response.length());
