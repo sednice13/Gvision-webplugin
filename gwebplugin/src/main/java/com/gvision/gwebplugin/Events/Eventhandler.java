@@ -26,9 +26,10 @@ public class Eventhandler implements Listener{
     @EventHandler
     public void getPlayerMessage(AsyncPlayerChatEvent event) throws IOException {
          String message = event.getMessage();
+         String player = event.getPlayer().toString();
 
          Bukkit.getLogger().log(Level.INFO, "meddelande " + message );
-        postHandler.sendHttpmessageToChat(message);
+        postHandler.sendHttpmessageToChat(message, player);
         
 
     }

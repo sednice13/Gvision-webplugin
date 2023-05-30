@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 
 public class Postmessage {
     
-    public void sendHttpmessageToChat(String message) throws IOException {
+    public void sendHttpmessageToChat(String message, String player) throws IOException {
 
      URL url = new URL("http://localhost:8081/mc/mchandle");
      HttpURLConnection http = (HttpURLConnection) url.openConnection();
@@ -25,6 +25,7 @@ public class Postmessage {
 
      JsonObject jsonobject = new JsonObject();
      jsonobject.addProperty("message", message);
+     jsonobject.addProperty("player", player);
 
      String jsonString = jsonobject.toString();
 
