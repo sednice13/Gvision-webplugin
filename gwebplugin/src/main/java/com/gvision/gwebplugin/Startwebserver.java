@@ -16,17 +16,13 @@ import com.sun.net.httpserver.HttpServer;
 public class Startwebserver {
     
     public void startHttpServer() throws IOException, URISyntaxException {
-        // Skapa en ny HTTP-server på port 8000
+        
         HttpServer server = HttpServer.create(new InetSocketAddress(9308), 0);
         
         
         server.createContext("/sendmessage", new MyHttpHandler());
         server.createContext("/connectuser", new ConnectPlayerHandler());
-        
-        // Starta HTTP-servern
         server.start();
-        
-        // skicka ett meddelande till konsolen när HTTP-servern startas
         Bukkit.getLogger().log(Level.INFO, "HTTP-server startad på port 8000");
     }
 }

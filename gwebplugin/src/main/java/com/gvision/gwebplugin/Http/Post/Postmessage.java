@@ -15,7 +15,7 @@ public class Postmessage {
     
     public void sendHttpmessageToChat(String message, String player) throws IOException {
 
-     URL url = new URL("http://localhost:8081/mc/mchandle");
+     URL url = new URL("https://cscloud8-40.lnu.se/api/mcbackend/mc/mchandle");
      HttpURLConnection http = (HttpURLConnection) url.openConnection();
 
      http.setRequestMethod("POST");

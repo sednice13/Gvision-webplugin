@@ -40,11 +40,12 @@ public class MyHttpHandler implements HttpHandler {
     
         if (jsonRequest.has("message")) {
             String message = jsonRequest.get("message").getAsString();
+            String mcname = jsonRequest.get("mcname").getAsString();
     
             
 
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                player.sendMessage(ChatColor.RED + "<WEBSITE> " + ChatColor.GREEN + message);
+                player.sendMessage(ChatColor.RED + "<WEBSITE> " + ChatColor.GREEN + mcname + " "+ message);
             }
     
         }

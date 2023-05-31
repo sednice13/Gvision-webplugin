@@ -18,7 +18,6 @@ public class ConnectPlayerHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        // TODO Auto-generated method stub
         if (exchange.getRequestMethod().equalsIgnoreCase("POST")) {
            
             getUUIDwithUsername(exchange);
@@ -37,9 +36,7 @@ public class ConnectPlayerHandler implements HttpHandler {
     
         if (jsonRequest.has("playername")) {
            
-            String plname = jsonRequest.get("playername").getAsString();
-
-            
+            String plname = jsonRequest.get("playername").getAsString();        
     
             Player player = Bukkit.getPlayer(plname);
 
@@ -47,7 +44,6 @@ public class ConnectPlayerHandler implements HttpHandler {
     
             if(player != null) {
               
-                Bukkit.getLogger().log(Level.INFO, "Test 4 " );
                 UUID uuid = player.getUniqueId(); 
     
                 jsonResponse.addProperty("playername", plname);
