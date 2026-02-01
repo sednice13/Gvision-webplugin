@@ -1,0 +1,4 @@
+websocket:
+  enabled: false
+  url: "wss://your-backend.example.com/ws"
+  reconnectSeconds: 5

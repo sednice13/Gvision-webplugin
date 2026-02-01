@@ -1,8 +1,6 @@
 package com.gvision.gwebplugin.Events;
 
-import java.io.IOException;
-
-import com.gvision.gwebplugin.Http.Post.Postmessage;
+import com.gvision.gwebplugin.Plugin;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -13,8 +11,11 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Eventhandler implements Listener{
-    
-    Postmessage postHandler = new Postmessage();
+    private final Plugin plugin;
+
+    public Eventhandler(Plugin plugin) {
+        this.plugin = plugin;
+    }
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
@@ -24,12 +25,14 @@ public class Eventhandler implements Listener{
     }
 
     @EventHandler
-    public void getPlayerMessage(AsyncPlayerChatEvent event) throws IOException {
+    public void getPlayerMessage(AsyncPlayerChatEvent event) {
          String message = event.getMessage();
-         String player = event.getPlayer().toString();
+         String player = event.getPlayer().getName();
 
          Bukkit.getLogger().log(Level.INFO, "meddelande " + message );
-        postHandler.sendHttpmessageToChat(message, player);
+        if (plugin.getWebsocketClient() != null) {
+            plugin.getWebsocketClient().sendChatMessage(player, message);
+        }
         
 
     }
