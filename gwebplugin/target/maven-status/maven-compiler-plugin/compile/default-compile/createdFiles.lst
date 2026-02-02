@@ -1,7 +1,10 @@
+com\gvision\gwebplugin\listeners\PlayerChatListener.class
 com\gvision\gwebplugin\Http\Httphandlers\ConnectPlayerHandler.class
-com\gvision\gwebplugin\Events\Eventhandler.class
-com\gvision\gwebplugin\Startwebserver.class
 com\gvision\gwebplugin\Plugin.class
 com\gvision\gwebplugin\Http\Httphandlers\MyHttpHandler.class
 com\gvision\gwebplugin\Http\Post\Postmessage.class
+com\gvision\gwebplugin\listeners\PlayerJoinListener.class
 com\gvision\gwebplugin\WebsocketMessageClient.class
+com\gvision\gwebplugin\Startwebserver.class
+com\gvision\gwebplugin\Configs\FileHanlder.class
+com\gvision\gwebplugin\Configs\GeneralFileConfigInterface.class

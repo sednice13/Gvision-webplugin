@@ -1,10 +1,12 @@
 package com.gvision.gwebplugin;
 
-import com.gvision.gwebplugin.Events.Eventhandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.net.URI;
 import java.util.logging.Level;
+import com.gvision.gwebplugin.Configs.FileHanlder;
+import com.gvision.gwebplugin.listeners.PlayerChatListener;
+import com.gvision.gwebplugin.listeners.PlayerJoinListener;
 
 /*
  * gwebplugin java plugin
@@ -12,24 +14,29 @@ import java.util.logging.Level;
 public class Plugin extends JavaPlugin implements Listener {
     private WebsocketMessageClient websocketClient;
     private int reconnectTaskId = -1;
+    private FileHanlder websocketUrlFile;
 
     @Override
     public void onEnable() {
         saveDefaultConfig();
 
-        boolean enabled = getConfig().getBoolean("websocket.enabled", false);
-        String url = getConfig().getString("websocket.url", "");
+        boolean enabled = getConfig().getBoolean("websocket.enabled", true);
+        FileHanlder websocketUrlFile = new FileHanlder(this, "webSocket.yml");
+       
+        
+       
         int reconnectSeconds = getConfig().getInt("websocket.reconnectSeconds", 5);
 
-        if (enabled && url != null && !url.isBlank()) {
-            connectWebsocket(url, reconnectSeconds);
+        if (enabled) {
+            connectWebsocket("TEMPfakeurl", reconnectSeconds);
             
         } else {
             getLogger().log(Level.WARNING, "WebSocket är avstängd eller saknar URL i config.yml");
         }
 
-        // Registrera spelarhändelse
-        getServer().getPluginManager().registerEvents(new Eventhandler(this), this);
+        // Registrera spelarhändelser
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
     }
 
     @Override
