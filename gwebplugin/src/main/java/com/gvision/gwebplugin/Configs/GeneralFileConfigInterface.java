@@ -11,9 +11,15 @@ public interface GeneralFileConfigInterface {
 
     void saveFile();
 
-    boolean checkFileExists();
+    boolean checkFileExists(File file);
 
-    public FileConfiguration load(String fileName);
+    FileConfiguration load(String fileName);
 
+    void setString(String veriable, String value);
 
+    void setBoolean(String veriable, boolean value);
+
+    void setInt(String veriable, int value);
+
+   
 }

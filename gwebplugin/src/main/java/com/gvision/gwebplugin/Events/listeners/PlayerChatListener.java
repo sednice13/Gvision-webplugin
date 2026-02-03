@@ -1,13 +1,15 @@
-package com.gvision.gwebplugin.listeners;
+package com.gvision.gwebplugin.Events.listeners;
 
 import java.util.logging.Level;
 
 import com.gvision.gwebplugin.Plugin;
 
+import io.papermc.paper.event.player.AsyncChatEvent;
+
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+
 
 public class PlayerChatListener implements Listener {
     private final Plugin plugin;
@@ -17,8 +19,8 @@ public class PlayerChatListener implements Listener {
     }
 
     @EventHandler
-    public void onPlayerChat(AsyncPlayerChatEvent event) {
-        String message = event.getMessage();
+    public void onPlayerChat(AsyncChatEvent event) {
+        String message = event.message().toString();
         String player = event.getPlayer().getName();
 
         Bukkit.getLogger().log(Level.INFO, "meddelande " + message);

@@ -1,17 +1,15 @@
 package com.gvision.gwebplugin;
 
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.net.URI;
 import java.util.logging.Level;
 import com.gvision.gwebplugin.Configs.FileHanlder;
-import com.gvision.gwebplugin.listeners.PlayerChatListener;
-import com.gvision.gwebplugin.listeners.PlayerJoinListener;
+import com.gvision.gwebplugin.Events.listeners.ReigsterEvents;
 
 /*
  * gwebplugin java plugin
  */
-public class Plugin extends JavaPlugin implements Listener {
+public class Plugin extends JavaPlugin {
     private WebsocketMessageClient websocketClient;
     private int reconnectTaskId = -1;
     private FileHanlder websocketUrlFile;
@@ -34,9 +32,7 @@ public class Plugin extends JavaPlugin implements Listener {
             getLogger().log(Level.WARNING, "WebSocket är avstängd eller saknar URL i config.yml");
         }
 
-        // Registrera spelarhändelser
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerChatListener(this), this);
+        new ReigsterEvents(this).registerAllEventsListeners();
     }
 
     @Override
@@ -79,4 +75,6 @@ public class Plugin extends JavaPlugin implements Listener {
     public WebsocketMessageClient getWebsocketClient() {
         return websocketClient;
     }
+
 }
+

@@ -19,19 +19,21 @@ public class FileHanlder implements GeneralFileConfigInterface {
         this.plugin = plugin;
         this.fileName = fileName;
         this.config = load(fileName);
-        
+
     }
 
+    /** 
+     * @param fileName
+     * @return FileConfiguration
+     */
     @Override
     public FileConfiguration load(String fileName) {
-      
-         File file = new File(plugin.getDataFolder(), fileName);
 
-         System.out.println("Laddar fil: " + file.getAbsolutePath());
-         
+        File file = new File(plugin.getDataFolder(), fileName);
+
+        System.out.println("Laddar fil: " + file.getAbsolutePath());
 
         if (!file.exists()) {
-        
 
             plugin.saveResource(fileName, false); // kopierar från resources
         }
@@ -54,10 +56,48 @@ public class FileHanlder implements GeneralFileConfigInterface {
         }
     }
 
+    /** 
+     * @return boolean
+     */
     @Override
-    public boolean checkFileExists() {
-        File file = new File(plugin.getDataFolder(), fileName);
+    public boolean checkFileExists(File file) {
+       
         return file.exists();
     }
+
+    /** 
+     * Sets a string value in the configuration file.
+     * @param veriable config key
+     * @param value value String
+     */
+    @Override
+    public void setString(String veriable, String value) {
+        config.set(veriable, value);
+        saveFile();
+
+    }
+    /** 
+     * Sets a boolean value in the configuration file.
+     * @param veriable config key
+     * @param value value boolean
+     */
+    @Override
+    public void setBoolean(String veriable, boolean value) {
+        config.set(veriable, value);
+        saveFile();
+}
+
+    /** 
+     * Sets an integer value in the configuration file.
+     * @param veriable
+     * @param value
+     */
+    @Override
+    public void setInt(String veriable, int value) {
+        config.set(veriable, value);
+        saveFile();
+    }
+
+   
 
 }
