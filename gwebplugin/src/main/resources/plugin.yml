@@ -3,3 +3,7 @@ main: com.gvision.gwebplugin.Plugin
 version: 0.0.3
 api-version: 1.21
 description: Test plugin
+commands:
+  gweb:
+    description: gwebplugin kommando
+    usage: /gweb [reload]

@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.net.URI;
 import java.util.logging.Level;
 import com.gvision.gwebplugin.Configs.FileHanlder;
+import com.gvision.gwebplugin.Commands.CommandManager;
 import com.gvision.gwebplugin.Events.listeners.ReigsterEvents;
 
 /*
@@ -32,6 +33,7 @@ public class Plugin extends JavaPlugin {
             getLogger().log(Level.WARNING, "WebSocket är avstängd eller saknar URL i config.yml");
         }
 
+        new CommandManager(this).registerAll();
         new ReigsterEvents(this).registerAllEventsListeners();
     }
 

@@ -16,5 +16,7 @@ public class PlayerJoinListener implements Listener {
       Component welcomeMessage = Component.text("Välkommen till servern, " + event.getPlayer().getName() + "!")
               .color(NamedTextColor.GREEN);
       event.getPlayer().sendMessage(welcomeMessage);
+
+     
     }
 }
