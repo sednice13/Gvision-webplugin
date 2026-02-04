@@ -1,6 +1,6 @@
 name: gwebplugin
 main: com.gvision.gwebplugin.Plugin
-version: 0.0.3
+version: ${project.version}
 api-version: 1.21
 description: Test plugin
 commands:

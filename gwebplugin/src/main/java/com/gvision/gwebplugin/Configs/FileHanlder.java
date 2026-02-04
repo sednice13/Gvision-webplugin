@@ -33,7 +33,7 @@ public class FileHanlder implements GeneralFileConfigInterface {
 
         System.out.println("Laddar fil: " + file.getAbsolutePath());
 
-        if (!file.exists()) {
+        if (!checkFileExists(file)) {
 
             plugin.saveResource(fileName, false); // kopierar från resources
         }

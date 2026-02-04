@@ -3,11 +3,13 @@ package com.gvision.gwebplugin.Commands;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 
 import com.gvision.gwebplugin.Plugin;
+import com.gvision.gwebplugin.Configs.FileHanlder;
 
 public class CommandManager {
     private final Plugin plugin;
@@ -20,7 +22,7 @@ public class CommandManager {
     }
 
     private void registerBuiltIns() {
-        GwebCommand gweb = new GwebCommand(plugin);
+        GwebCommand gweb = new GwebCommand(plugin, new FileHanlder(plugin, "webSocket.yml"));
         register("gweb", gweb, gweb);
     }
 

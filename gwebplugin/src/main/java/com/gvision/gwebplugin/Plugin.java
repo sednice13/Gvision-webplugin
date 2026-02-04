@@ -2,6 +2,7 @@ package com.gvision.gwebplugin;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import com.gvision.gwebplugin.Configs.FileHanlder;
 import com.gvision.gwebplugin.Commands.CommandManager;
@@ -14,6 +15,9 @@ public class Plugin extends JavaPlugin {
     private WebsocketMessageClient websocketClient;
     private int reconnectTaskId = -1;
     private FileHanlder websocketUrlFile;
+    private ArrayList<FileHanlder> customconfigs;
+
+    
 
     @Override
     public void onEnable() {
