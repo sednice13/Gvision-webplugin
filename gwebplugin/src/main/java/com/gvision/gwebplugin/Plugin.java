@@ -24,14 +24,22 @@ public class Plugin extends JavaPlugin {
         saveDefaultConfig();
 
         boolean enabled = getConfig().getBoolean("websocket.enabled", true);
-        FileHanlder websocketUrlFile = new FileHanlder(this, "webSocket.yml");
+        websocketUrlFile = new FileHanlder(this, "webSocket.yml");
        
         
        
         int reconnectSeconds = getConfig().getInt("websocket.reconnectSeconds", 5);
 
         if (enabled) {
-            connectWebsocket("TEMPfakeurl", reconnectSeconds);
+            String url = websocketUrlFile.load("webSocket.yml").getString("websocketurl");
+            if (url != null) {
+                url = url.trim();
+            }
+            if (url == null || url.isEmpty()) {
+                getLogger().log(Level.WARNING, "WebSocket ‰r avst‰ngd eller saknar URL i webSocket.yml");
+            } else {
+                connectWebsocket(url, reconnectSeconds);
+            }
             
         } else {
             getLogger().log(Level.WARNING, "WebSocket √§r avst√§ngd eller saknar URL i config.yml");

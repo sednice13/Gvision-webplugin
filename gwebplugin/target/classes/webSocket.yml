@@ -1,1 +1,1 @@
-websocketurl: "ws://example.com/socket"
+websocketurl: "ws://localhost:9308/ws"
