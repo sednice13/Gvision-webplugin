@@ -2,6 +2,7 @@ package com.gvision.gwebplugin.Configs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -96,6 +97,31 @@ public class FileHanlder implements GeneralFileConfigInterface {
     public void setInt(String veriable, int value) {
         config.set(veriable, value);
         saveFile();
+    }
+
+    /** 
+     * Adds a string to a list in the configuration file.
+     * @param veriable config key
+     * @param value value String to add
+     */
+    @Override
+    public void addStringtoArray(String veriable, String value) {
+        java.util.List<String> list = config.getStringList(veriable);
+        if (!list.contains(value)) {
+            list.add(value);
+            config.set(veriable, list);
+            saveFile(); 
+        } 
+    }
+
+    /** 
+     * Gets a list of strings from the configuration file.
+     * @param veriable config key
+     * @return List<String> list of strings
+     */
+    @Override
+    public List<String> getStringList(String veriable) {
+        return config.getStringList(veriable);
     }
 
    

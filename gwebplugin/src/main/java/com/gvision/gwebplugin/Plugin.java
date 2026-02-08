@@ -16,6 +16,8 @@ public class Plugin extends JavaPlugin {
     private int reconnectTaskId = -1;
     private FileHanlder websocketUrlFile;
     private ArrayList<FileHanlder> customconfigs;
+    private FileHanlder webchatOFFListFile;
+    private ArrayList<String> offList;
 
     
 
@@ -25,6 +27,11 @@ public class Plugin extends JavaPlugin {
 
         boolean enabled = getConfig().getBoolean("websocket.enabled", true);
         websocketUrlFile = new FileHanlder(this, "webSocket.yml");
+        webchatOFFListFile = new FileHanlder(this, "webchatOFFList.yml");
+        offList = new ArrayList<>();
+           
+
+
        
         
        
@@ -36,7 +43,7 @@ public class Plugin extends JavaPlugin {
                 url = url.trim();
             }
             if (url == null || url.isEmpty()) {
-                getLogger().log(Level.WARNING, "WebSocket är avstängd eller saknar URL i webSocket.yml");
+                getLogger().log(Level.WARNING, "WebSocket ï¿½r avstï¿½ngd eller saknar URL i webSocket.yml");
             } else {
                 connectWebsocket(url, reconnectSeconds);
             }
@@ -46,7 +53,7 @@ public class Plugin extends JavaPlugin {
         }
 
         new CommandManager(this).registerAll();
-        new ReigsterEvents(this).registerAllEventsListeners();
+        new ReigsterEvents(this, webchatOFFListFile, offList).registerAllEventsListeners();
     }
 
     @Override
@@ -90,5 +97,8 @@ public class Plugin extends JavaPlugin {
         return websocketClient;
     }
 
-}
+    public ArrayList<String> getOffList() {
+        return offList;
+    }
 
+}

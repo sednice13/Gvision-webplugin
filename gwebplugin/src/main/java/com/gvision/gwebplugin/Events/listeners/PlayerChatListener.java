@@ -1,9 +1,11 @@
 package com.gvision.gwebplugin.Events.listeners;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 import com.gvision.gwebplugin.Plugin;
-import com.gvision.gwebplugin.Commands.GwebCommand;
+import com.gvision.gwebplugin.Commands.GwebCommandFolder.GwebCommand;
+import com.gvision.gwebplugin.Configs.FileHanlder;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 
@@ -15,9 +17,13 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class PlayerChatListener implements Listener {
     private final Plugin plugin;
+    
+    private final ArrayList<String> TempOffList;
 
-    public PlayerChatListener(Plugin plugin) {
+    public PlayerChatListener(Plugin plugin,  ArrayList<String> TempOffList) {
         this.plugin = plugin;
+        
+        this.TempOffList = TempOffList;
     }
 
     @EventHandler
@@ -31,7 +37,8 @@ public class PlayerChatListener implements Listener {
         }
 
         Bukkit.getLogger().log(Level.INFO, "meddelande " + message);
-        if (plugin.getWebsocketClient() != null) {
+        
+        if (plugin.getWebsocketClient() != null && !TempOffList.contains(player)) {
             plugin.getWebsocketClient().sendChatMessage(player, message);
         }
     }

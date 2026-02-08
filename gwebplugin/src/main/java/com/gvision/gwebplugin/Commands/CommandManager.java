@@ -9,6 +9,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 
 import com.gvision.gwebplugin.Plugin;
+import com.gvision.gwebplugin.Commands.GwebCommandFolder.GwebCommand;
 import com.gvision.gwebplugin.Configs.FileHanlder;
 
 public class CommandManager {
@@ -22,7 +23,12 @@ public class CommandManager {
     }
 
     private void registerBuiltIns() {
-        GwebCommand gweb = new GwebCommand(plugin, new FileHanlder(plugin, "webSocket.yml"));
+        GwebCommand gweb = new GwebCommand(
+            plugin,
+            new FileHanlder(plugin, "webSocket.yml"),
+            new FileHanlder(plugin, "webchatOFFList.yml"),
+            plugin.getOffList()
+        );
         register("gweb", gweb, gweb);
     }
 
