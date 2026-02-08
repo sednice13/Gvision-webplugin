@@ -1,0 +1,3 @@
+websocket:
+  enabled: false
+  reconnectSeconds: 0

@@ -3,7 +3,7 @@ package com.gvision.gwebplugin.Events.listeners;
 import java.util.logging.Level;
 
 import com.gvision.gwebplugin.Plugin;
-import com.gvision.gwebplugin.Commands.GwebCommand;
+import com.gvision.gwebplugin.Commands.GwebCommandFolder.GwebCommand;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 

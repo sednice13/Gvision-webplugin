@@ -1,4 +1,4 @@
-package com.gvision.gwebplugin.Commands;
+package com.gvision.gwebplugin.Commands.GwebCommandFolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import com.gvision.gwebplugin.Configs.FileHanlder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-public class GwebCommand implements CommandExecutor, TabCompleter {
+public class GwebCommand implements CommandExecutor, TabCompleter  {
     private static final Map<UUID, GwebCommand> PENDING_SOCKET_UPDATE = new ConcurrentHashMap<>();
     private final Plugin plugin;
     private final FileHanlder socketFile;
@@ -31,19 +31,44 @@ public class GwebCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 1 && args[0].equalsIgnoreCase("modify")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage(Component.text("Bara spelare kan ändra socket-adress.").color(NamedTextColor.RED));
-                return true;
-            }
-            Player player = (Player) sender;
-            PENDING_SOCKET_UPDATE.put(player.getUniqueId(), this);
-            sender.sendMessage(Component.textOfChildren(Component.text("Modifierar socketadress").color(NamedTextColor.YELLOW)));
-            sender.sendMessage(Component.textOfChildren(Component.text("Säg nya adressen i chatten.").color(NamedTextColor.GOLD)));
-            return true;
+        if (args.length == 1) {
+            return argMethod(args[0], sender);
         }
-
         return true;
+    }
+
+    private boolean argMethod(String arg, CommandSender sender) {
+        GwebChoises choice = GwebChoises.fromString(arg);
+        switch (choice) {
+            case MODIFY:
+                if (!(sender instanceof Player)) {
+                    sender.sendMessage(Component.text("Bara spelare kan ï¿½ndra socket-adress.").color(NamedTextColor.RED));
+                    return true;
+                }
+                Player player = (Player) sender;
+                PENDING_SOCKET_UPDATE.put(player.getUniqueId(), this);
+                sender.sendMessage(Component.textOfChildren(Component.text("Modifierar socketadress").color(NamedTextColor.YELLOW)));
+                sender.sendMessage(Component.textOfChildren(Component.text("Sï¿½g nya adressen i chatten.").color(NamedTextColor.GOLD)));
+                return true;
+            case RELOAD:
+                plugin.reloadConfig();
+                sender.sendMessage(Component.text("Konfiguration laddad.").color(NamedTextColor.GREEN));
+                return true;
+            case TURNON:
+            case TURNOFF:
+                addPlayerToTurnOFFFile((Player) sender);
+                return true;
+            case INVALID:
+            default:
+                sender.sendMessage(Component.text("Ogiltigt kommando.").color(NamedTextColor.RED));
+                return true;
+        }
+    }
+
+    private void addPlayerToTurnOFFFile(Player player) {
+
+
+
     }
 
     public static boolean consumePendingSocketUpdate(Player player, String message) {
@@ -59,7 +84,7 @@ public class GwebCommand implements CommandExecutor, TabCompleter {
         String trimmed = message == null ? "" : message.trim();
         plugin.getServer().getScheduler().runTask(plugin, () -> {
             if (trimmed.isEmpty()) {
-                player.sendMessage(Component.text("Ingen adress angiven. Försök igen.").color(NamedTextColor.RED));
+                player.sendMessage(Component.text("Ingen adress angiven. Fï¿½rsï¿½k igen.").color(NamedTextColor.RED));
                 return;
             }
             socketFile.setString("websocketurl", trimmed);
