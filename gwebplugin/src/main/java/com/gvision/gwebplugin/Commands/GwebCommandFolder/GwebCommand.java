@@ -33,6 +33,14 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         this.offList = offList;
     }
 
+    /** 
+     * /gweb <modify|reload|turnoff|turnon>
+     * @param sender
+     * @param command
+     * @param label
+     * @param args
+     * @return boolean
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1) {
@@ -41,6 +49,12 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         return true;
     }
 
+    /** 
+     * Args method for /gweb command
+     * @param  arg  - the argument passed to the command
+     * @param sender - the sender of the command
+     * @return boolean - true if the command was handled, false otherwise
+     */
     private boolean argMethod(String arg, CommandSender sender) {
         GwebChoises choice = GwebChoises.fromString(arg);
         switch (choice) {
@@ -59,6 +73,8 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
                 sender.sendMessage(Component.text("Konfiguration laddad.").color(NamedTextColor.GREEN));
                 return true;
             case TURNON:
+                removePlayerFromTurnOFFFile((Player) sender);
+                return true;
             case TURNOFF:
                 addPlayerToTurnOFFFile((Player) sender);
                 return true;
@@ -69,6 +85,10 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         }
     }
 
+    /** 
+     * Adds a player to the webchat off list and updates the file accordingly
+     * @param player - the player to add to the off list
+     */
     private void addPlayerToTurnOFFFile(Player player) {
 
         List<String> players = webchatOFFListFile.getStringList("players");
@@ -84,6 +104,25 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
 
     }
 
+    private void removePlayerFromTurnOFFFile(Player player) {
+        List<String> players = webchatOFFListFile.getStringList("players");
+        if (!players.contains(player.getName())) {
+            player.sendMessage(Component.text("Du har inte stängt av webchatten.").color(NamedTextColor.YELLOW));
+            return;
+        }
+        players.remove(player.getName());
+        webchatOFFListFile.removeStringFromArray("players", player.getName());
+        offList.remove(player.getName());
+        player.sendMessage(Component.text("Webchatten har aktiverats för dig.").color(NamedTextColor.GREEN));
+
+    }
+
+    /** 
+     * Consumes a pending socket update for a player if it exists, applying the new socket address
+     * @param player - the player for whom to consume the pending socket update
+     * @param message - the new socket address to apply
+     * @return boolean - true if a pending socket update was consumed and applied, false otherwise
+     */
     public static boolean consumePendingSocketUpdate(Player player, String message) {
         GwebCommand handler = PENDING_SOCKET_UPDATE.remove(player.getUniqueId());
         if (handler == null) {
@@ -93,6 +132,11 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         return true;
     }
 
+    /** 
+     * Applies a new socket address for a player, updating the configuration file and notifying the player
+     * @param player
+     * @param message
+     */
     private void applySocketUpdate(Player player, String message) {
         String trimmed = message == null ? "" : message.trim();
         plugin.getServer().getScheduler().runTask(plugin, () -> {
@@ -106,6 +150,14 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         });
     }
 
+    /** 
+     * Provides tab completion options for the /gweb command, suggesting valid subcommands based on the current input
+     * @param sender - the sender of the command
+     * @param command - the command being executed
+     * @param alias - the alias used for the command
+     * @param args - the current arguments passed to the command
+     * @return List<String> - a list of tab completion suggestions based on the current input
+     */
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
@@ -120,4 +172,5 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         }
         return Collections.emptyList();
     }
+
 }

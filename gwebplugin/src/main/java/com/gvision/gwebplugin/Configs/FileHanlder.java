@@ -124,6 +124,22 @@ public class FileHanlder implements GeneralFileConfigInterface {
         return config.getStringList(veriable);
     }
 
+    /** 
+     * Removes a string from a list in the configuration file.
+     * @param veriable config key
+     * @param value value String to remove
+     */
+    @Override
+    public void removeStringFromArray(String veriable, String value) {
+        List<String> list = config.getStringList(veriable);
+        if (list.contains(value)) {
+            list.remove(value);
+            config.set(veriable, list);
+            saveFile();
+        }
+
+    }
+
    
 
 }

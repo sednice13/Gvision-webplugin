@@ -26,5 +26,9 @@ public interface GeneralFileConfigInterface {
 
     List<String> getStringList(String veriable);
 
+    void removeStringFromArray(String veriable, String value);
+
+
+
    
 }
