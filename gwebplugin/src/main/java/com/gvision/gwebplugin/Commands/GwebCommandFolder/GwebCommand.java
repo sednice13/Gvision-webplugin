@@ -172,5 +172,4 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
         }
         return Collections.emptyList();
     }
-
 }
