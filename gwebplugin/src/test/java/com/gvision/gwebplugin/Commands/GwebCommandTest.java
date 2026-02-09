@@ -35,7 +35,7 @@ public class GwebCommandTest {
     void modifyCommandUpdatesWebsocketUrl() {
         PlayerMock player = server.addPlayer();
         FileHanlder socketFile = new FileHanlder(plugin, "webSocket.yml");
-        GwebCommand command = new GwebCommand(plugin, socketFile);
+        GwebCommand command = new GwebCommand(plugin, socketFile, socketFile, null);
 
         command.onCommand(player, null, "gweb", new String[] { "modify" });
 

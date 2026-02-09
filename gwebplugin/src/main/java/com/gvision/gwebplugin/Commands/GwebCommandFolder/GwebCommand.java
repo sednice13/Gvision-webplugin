@@ -25,12 +25,14 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
     private final FileHanlder socketFile;
     private final FileHanlder webchatOFFListFile;
     private final ArrayList<String> offList;
+    private final FileHanlder bannedFile;
 
-    public GwebCommand(Plugin plugin, FileHanlder Socketfile, FileHanlder webchatOFFListFile, ArrayList<String> offList) {
+    public GwebCommand(Plugin plugin, FileHanlder Socketfile, FileHanlder webchatOFFListFile, ArrayList<String> offList, FileHanlder bannedFile) {
         this.plugin = plugin;
         this.socketFile = Socketfile;
         this.webchatOFFListFile = webchatOFFListFile;
         this.offList = offList;
+        this.bannedFile = bannedFile;
     }
 
     /** 
@@ -104,6 +106,8 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
 
     }
 
+    
+
     private void removePlayerFromTurnOFFFile(Player player) {
         List<String> players = webchatOFFListFile.getStringList("players");
         if (!players.contains(player.getName())) {
@@ -134,8 +138,8 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
 
     /** 
      * Applies a new socket address for a player, updating the configuration file and notifying the player
-     * @param player
-     * @param message
+     * @param player - the player for whom to apply the new socket address
+     * @param message - the new socket address to apply
      */
     private void applySocketUpdate(Player player, String message) {
         String trimmed = message == null ? "" : message.trim();
@@ -148,6 +152,19 @@ public class GwebCommand implements CommandExecutor, TabCompleter  {
             player.sendMessage(Component.text("Socket-adress uppdaterad: ").color(NamedTextColor.GREEN)
                 .append(Component.text(trimmed).color(NamedTextColor.YELLOW)));
         });
+    }
+
+    /** 
+     * Bans a player from using the webchat by adding them to the turn off file and the banned players list in the configuration
+     * @param player - the player to ban from webchat
+     */
+    private void banPlayerFromWebchat(Player player) {
+        addPlayerToTurnOFFFile(player);
+        List<String> bannedPlayers = socketFile.getStringList("bannedPlayers");
+        if (!bannedPlayers.contains(player.getName())) {
+            socketFile.addStringtoArray("bannedPlayers", player.getName());
+            
+        }
     }
 
     /** 
