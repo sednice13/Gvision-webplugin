@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.gvision.gwebplugin.Commands.CommandManagerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.235 s -- in com.gvision.gwebplugin.Commands.CommandManagerTest

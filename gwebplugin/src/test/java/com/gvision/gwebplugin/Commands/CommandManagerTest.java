@@ -8,8 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import com.gvision.gwebplugin.Plugin;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.PluginCommandUtils;
 
 public class CommandManagerTest {
     private ServerMock server;
@@ -18,7 +20,9 @@ public class CommandManagerTest {
     @BeforeEach
     void setUp() {
         server = MockBukkit.mock();
-        plugin = MockBukkit.load(Plugin.class);
+        plugin = MockBukkit.loadSimple(Plugin.class);
+        PluginCommand command = PluginCommandUtils.createPluginCommand("gweb", plugin);
+        server.getCommandMap().register(plugin.getName(), command);
     }
 
     @AfterEach

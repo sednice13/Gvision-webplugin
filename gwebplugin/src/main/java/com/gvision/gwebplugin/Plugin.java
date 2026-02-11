@@ -29,6 +29,7 @@ public class Plugin extends JavaPlugin {
         boolean enabled = getConfig().getBoolean("websocket.enabled", true);
         websocketUrlFile = new FileHanlder(this, "webSocket.yml");
         webchatOFFListFile = new FileHanlder(this, "webchatOFFList.yml");
+        bannedFile = new FileHanlder(this, "bannedfile.yml");
         offList = new ArrayList<>();
            
 
