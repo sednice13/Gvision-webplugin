@@ -5,7 +5,9 @@ public enum GwebChoises {
     RELOAD("reload"),
     TURNON("turnon"),
     TURNOFF("turnoff"),
-    INVALID("invalid");
+    INVALID("invalid"),
+    BAN("ban"),
+    UNBAN("unban");
 
     private final String token;
 

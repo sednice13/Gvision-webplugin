@@ -1,5 +1,7 @@
 com\gvision\gwebplugin\Commands\CommandManager.class
 com\gvision\gwebplugin\Http\Httphandlers\ConnectPlayerHandler.class
+com\gvision\gwebplugin\Commands\GwebCommandFolder\GwebCommand$1.class
+com\gvision\gwebplugin\Commands\GwebCommandFolder\GwebCommand.class
 com\gvision\gwebplugin\Plugin.class
 com\gvision\gwebplugin\Http\Httphandlers\MyHttpHandler.class
 com\gvision\gwebplugin\Events\listeners\PlayerJoinListener.class
@@ -7,7 +9,9 @@ com\gvision\gwebplugin\Http\Post\Postmessage.class
 com\gvision\gwebplugin\Events\listeners\PlayerChatListener.class
 com\gvision\gwebplugin\Events\listeners\ReigsterEvents.class
 com\gvision\gwebplugin\WebsocketMessageClient.class
-com\gvision\gwebplugin\Commands\GwebCommand.class
+com\gvision\gwebplugin\Commands\GwebCommandFolder\GwebChoises.class
 com\gvision\gwebplugin\Startwebserver.class
+com\gvision\gwebplugin\Events\listeners\PlayerLeaveListener.class
 com\gvision\gwebplugin\Configs\FileHanlder.class
+com\gvision\gwebplugin\custom\Customplayer.class
 com\gvision\gwebplugin\Configs\GeneralFileConfigInterface.class

@@ -12,9 +12,9 @@ import com.gvision.gwebplugin.Configs.FileHanlder;
 import com.gvision.gwebplugin.Plugin;
 import com.gvision.gwebplugin.Commands.GwebCommandFolder.GwebCommand;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 
 public class GwebCommandTest {
     private ServerMock server;
@@ -23,7 +23,7 @@ public class GwebCommandTest {
     @BeforeEach
     void setUp() {
         server = MockBukkit.mock();
-        plugin = MockBukkit.load(Plugin.class);
+        plugin = MockBukkit.loadSimple(Plugin.class);
     }
 
     @AfterEach
@@ -35,7 +35,7 @@ public class GwebCommandTest {
     void modifyCommandUpdatesWebsocketUrl() {
         PlayerMock player = server.addPlayer();
         FileHanlder socketFile = new FileHanlder(plugin, "webSocket.yml");
-        GwebCommand command = new GwebCommand(plugin, socketFile);
+        GwebCommand command = new GwebCommand(plugin, socketFile, socketFile, null, null);
 
         command.onCommand(player, null, "gweb", new String[] { "modify" });
 

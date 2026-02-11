@@ -2,6 +2,9 @@ package com.gvision.gwebplugin.Configs;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -30,13 +33,19 @@ public class FileHanlder implements GeneralFileConfigInterface {
     @Override
     public FileConfiguration load(String fileName) {
 
-        File file = new File(plugin.getDataFolder(), fileName);
+        File folder = resolveDataFolder();
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        File file = new File(folder, fileName);
 
         System.out.println("Laddar fil: " + file.getAbsolutePath());
 
         if (!checkFileExists(file)) {
 
-            plugin.saveResource(fileName, false); // kopierar från resources
+            if (!trySaveResource(fileName, file)) {
+                createEmptyFile(file);
+            }
         }
         config = YamlConfiguration.loadConfiguration(file);
         return config;
@@ -51,7 +60,7 @@ public class FileHanlder implements GeneralFileConfigInterface {
     @Override
     public void saveFile() {
         try {
-            config.save(new File(plugin.getDataFolder(), fileName));
+            config.save(new File(resolveDataFolder(), fileName));
         } catch (IOException ex) {
             plugin.getLogger().log(Level.WARNING, "Kunde inte spara konfigurationsfilen: " + fileName, ex);
         }
@@ -64,6 +73,42 @@ public class FileHanlder implements GeneralFileConfigInterface {
     public boolean checkFileExists(File file) {
        
         return file.exists();
+    }
+
+    private File resolveDataFolder() {
+        try {
+            return plugin.getDataFolder();
+        } catch (IllegalStateException ex) {
+            File fallback = new File("target/test-data");
+            fallback.mkdirs();
+            return fallback;
+        }
+    }
+
+    private boolean trySaveResource(String resourceName, File targetFile) {
+        try {
+            plugin.saveResource(resourceName, false);
+            return true;
+        } catch (IllegalStateException | IllegalArgumentException ex) {
+            InputStream input = plugin.getClass().getClassLoader().getResourceAsStream(resourceName);
+            if (input == null) {
+                return false;
+            }
+            try (InputStream resource = input) {
+                Files.copy(resource, targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                return true;
+            } catch (IOException ioEx) {
+                return false;
+            }
+        }
+    }
+
+    private void createEmptyFile(File file) {
+        try {
+            file.createNewFile();
+        } catch (IOException ex) {
+            plugin.getLogger().log(Level.WARNING, "Kunde inte skapa konfigurationsfilen: " + fileName, ex);
+        }
     }
 
     /** 

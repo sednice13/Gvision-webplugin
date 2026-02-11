@@ -16,11 +16,13 @@ public class ReigsterEvents implements Listener {
     private boolean eventsRegistered = false;
     private ArrayList<String> offList;
     private FileHanlder webchatOFFListFile;
+    private FileHanlder bannedFile;
 
-    public ReigsterEvents(Plugin plugin, FileHanlder webchatOFFListFile, ArrayList<String> OffList) {
+    public ReigsterEvents(Plugin plugin, FileHanlder webchatOFFListFile, ArrayList<String> OffList, FileHanlder bannedFile) {
         this.plugin = plugin;
         this.offList = OffList;
         this.webchatOFFListFile = webchatOFFListFile;
+        this.bannedFile = bannedFile;
     }
 
     public void registerAllEventsListeners() {
@@ -39,7 +41,8 @@ public class ReigsterEvents implements Listener {
             return;
         }
         eventsRegistered = true;
-        plugin.getServer().getPluginManager().registerEvents(new PlayerJoinListener(offList, webchatOFFListFile), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PlayerJoinListener(offList, webchatOFFListFile, bannedFile), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerChatListener(plugin, offList), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PlayerLeaveListener(offList), plugin);
     }
 }

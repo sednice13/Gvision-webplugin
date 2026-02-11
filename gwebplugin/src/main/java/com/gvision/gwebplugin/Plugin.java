@@ -18,6 +18,7 @@ public class Plugin extends JavaPlugin {
     private ArrayList<FileHanlder> customconfigs;
     private FileHanlder webchatOFFListFile;
     private ArrayList<String> offList;
+    private FileHanlder bannedFile;
 
     
 
@@ -28,6 +29,7 @@ public class Plugin extends JavaPlugin {
         boolean enabled = getConfig().getBoolean("websocket.enabled", true);
         websocketUrlFile = new FileHanlder(this, "webSocket.yml");
         webchatOFFListFile = new FileHanlder(this, "webchatOFFList.yml");
+        bannedFile = new FileHanlder(this, "bannedfile.yml");
         offList = new ArrayList<>();
            
 
@@ -53,7 +55,7 @@ public class Plugin extends JavaPlugin {
         }
 
         new CommandManager(this).registerAll();
-        new ReigsterEvents(this, webchatOFFListFile, offList).registerAllEventsListeners();
+        new ReigsterEvents(this, webchatOFFListFile, offList, bannedFile).registerAllEventsListeners();
     }
 
     @Override
@@ -101,4 +103,20 @@ public class Plugin extends JavaPlugin {
         return offList;
     }
 
+    public FileHanlder getBannedFile() {
+        return bannedFile;
+
+}
+
+    public FileHanlder getWebchatOFFListFile() {
+        return webchatOFFListFile;
+    }
+
+        public FileHanlder getWebsocketUrlFile() {
+            return websocketUrlFile;
+        }
+    
+        public ArrayList<FileHanlder> getCustomConfigs() {
+            return customconfigs;
+        }
 }

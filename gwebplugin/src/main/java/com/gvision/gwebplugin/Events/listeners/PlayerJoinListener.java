@@ -17,10 +17,12 @@ public class PlayerJoinListener implements Listener {
 
   private final ArrayList<String> tempOffList;
   private final FileHanlder webchatOFFListFile;
+  private final FileHanlder bannedFile;
 
-  public PlayerJoinListener(ArrayList<String> tempOffList, FileHanlder webchatOFFListFile) { 
+  public PlayerJoinListener(ArrayList<String> tempOffList, FileHanlder webchatOFFListFile, FileHanlder bannedFile) { 
     this.tempOffList = tempOffList;
     this.webchatOFFListFile = webchatOFFListFile;
+    this.bannedFile = bannedFile;
   }
 
     @EventHandler
@@ -30,6 +32,14 @@ public class PlayerJoinListener implements Listener {
       event.getPlayer().sendMessage(welcomeMessage);
 
       String playerName = event.getPlayer().getName();
+      
+      if (isPlayerBanned(playerName)) {
+          Component bannedMessage = Component.text("Du är bannad från webchat.").color(NamedTextColor.RED);
+          event.getPlayer().sendMessage(bannedMessage);
+          tempOffList.add(playerName);
+          return;
+      }
+
       webchatOFFListFile.getStringList("players").forEach(name -> {
           if (name.equalsIgnoreCase(playerName)) {
               tempOffList.add(playerName);
@@ -39,5 +49,9 @@ public class PlayerJoinListener implements Listener {
       });
 
      
+    }
+    private boolean isPlayerBanned(String playerName) {
+        return bannedFile.getStringList("bannedPlayers").stream()
+                .anyMatch(name -> name.equalsIgnoreCase(playerName));
     }
 }
