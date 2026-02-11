@@ -25,6 +25,10 @@ public class PlayerJoinListener implements Listener {
     this.bannedFile = bannedFile;
   }
 
+    /** 
+     * Handles the PlayerJoinEvent by sending a welcome message to the player, checking if they are banned from webchat, and checking if webchat is turned off for them. If the player is banned, they are added to the tempOffList and sent a message. If webchat is turned off for them, they are also added to the tempOffList and sent a message.
+     * @param event - the PlayerJoinEvent triggered when a player joins the server
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
       Component welcomeMessage = Component.text("Välkommen till servern, " + event.getPlayer().getName() + "!")
@@ -50,6 +54,11 @@ public class PlayerJoinListener implements Listener {
 
      
     }
+    /** 
+     * Checks if a player is banned by comparing their name against the list of banned players in the bannedFile.
+     * @param playerName - the name of the player to check
+     * @return boolean - true if the player is banned, false otherwise
+     */
     private boolean isPlayerBanned(String playerName) {
         return bannedFile.getStringList("bannedPlayers").stream()
                 .anyMatch(name -> name.equalsIgnoreCase(playerName));

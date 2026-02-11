@@ -7,3 +7,22 @@ commands:
   gweb:
     description: gwebplugin kommando
     usage: /gweb Setting
+permissions:
+  gwebplugin.gweb.modify:
+    description: Tillater /gweb modify
+    default: op
+  gwebplugin.gweb.reload:
+    description: Tillater /gweb reload
+    default: op
+  gwebplugin.gweb.turnoff:
+    description: Tillater /gweb turnoff
+    default: true
+  gwebplugin.gweb.turnon:
+    description: Tillater /gweb turnon
+    default: true
+  gwebplugin.gweb.ban:
+    description: Tillater /gweb ban <spelare>
+    default: op
+  gwebplugin.gweb.unban:
+    description: Tillater /gweb unban <spelare>
+    default: op

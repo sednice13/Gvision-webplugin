@@ -1,6 +1,7 @@
 package com.gvision.gwebplugin.Commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,8 +33,9 @@ public class GwebCommandTest {
     }
 
     @Test
-    void modifyCommandUpdatesWebsocketUrl() {
+    void modifyCommandUpdatesWebsocketUrlWhenPermitted() {
         PlayerMock player = server.addPlayer();
+        player.addAttachment(plugin, "gwebplugin.gweb.modify", true);
         FileHanlder socketFile = new FileHanlder(plugin, "webSocket.yml");
         GwebCommand command = new GwebCommand(plugin, socketFile, socketFile, null, null);
 
@@ -44,5 +46,19 @@ public class GwebCommandTest {
 
         FileConfiguration config = socketFile.load("webSocket.yml");
         assertEquals("ws://localhost:9308/ws", config.getString("websocketurl"));
+    }
+
+    @Test
+    void modifyCommandDoesNotQueueUpdateWithoutPermission() {
+        PlayerMock player = server.addPlayer();
+        player.setOp(false);
+        player.addAttachment(plugin, "gwebplugin.gweb.modify", false);
+        FileHanlder socketFile = new FileHanlder(plugin, "webSocket.yml");
+        GwebCommand command = new GwebCommand(plugin, socketFile, socketFile, null, null);
+
+        command.onCommand(player, null, "gweb", new String[] { "modify" });
+
+        boolean consumed = GwebCommand.consumePendingSocketUpdate(player, "ws://localhost:9308/ws");
+        assertFalse(consumed);
     }
 }
